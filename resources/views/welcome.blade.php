@@ -17,15 +17,18 @@
          <style>
              /* Custom CSS for background image and overlay */
              body {
-                 background-image: url('https://i.pinimg.com/736x/46/9c/c7/469cc762e00c93d423596115dea8750e.jpg'); /* Replace with your doctor's photo URL */
-                 background-size: cover;
+                 /* Menggunakan gradien biru terang sebagai pengganti gambar, mirip referensi */
+                 background: linear-gradient(135deg, #e0f2fe 0%, #bfdbfe 50%, #90cdf4 100%); /* Light blue to brighter blue gradient */
+                 background-size: cover; /* Penting untuk ukuran gradien */
                  background-position: center;
-                 background-attachment: fixed; /* Makes the background fixed while scrolling */
-                 position: relative; /* Needed for pseudo-element positioning */
-                 overflow-y: auto; /* Ensure scrolling works if content is long */
+                 background-attachment: fixed;
+                 position: relative;
+                 overflow-y: auto;
+                 min-height: 100vh;
+                 margin: 0;
              }
 
-             /* Overlay for better text readability */
+             /* Overlay lebih tipis atau disesuaikan untuk kontras yang lebih baik */
              body::before {
                  content: "";
                  position: absolute;
@@ -33,8 +36,9 @@
                  left: 0;
                  right: 0;
                  bottom: 0;
-                 background-color: rgba(0, 50, 100, 0.7); /* Dark blue overlay with 70% opacity */
-                 z-index: -1; /* Place behind content but above background image */
+                 /* Gradien overlay yang lebih halus atau transparan */
+                 background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05)); /* Sangat tipis, hampir transparan */
+                 z-index: -1;
              }
 
              /* Ensure content is above the overlay */
@@ -44,29 +48,29 @@
              }
          </style>
      </head>
-     <body class="text-white flex flex-col items-center justify-between min-h-screen font-sans p-6 lg:p-8">
+     <body class="text-gray-800 flex flex-col items-center justify-between min-h-screen font-sans p-6 lg:p-8">
          <header class="w-full lg:max-w-7xl mx-auto text-sm mb-6">
-             <div class="flex justify-between items-center h-16"> {{-- Tambahkan h-16 untuk tinggi konsisten --}}
-                 {{-- Logo Puskesmas di Kiri Atas --}}
+             <div class="flex justify-between items-center h-16">
+                 {{-- Logo Puskesmas di Kiri Atas (Tetap) --}}
                  <div class="flex-shrink-0 flex items-center">
-                     <a href="{{ url('/') }}"> {{-- Mengarahkan ke root URL --}}
-                         <img src="{{ asset('images/logopuskeskupanjangnobg2.png') }}" alt="{{ config('app.name') }}" class="h-12 w-auto"> {{-- Sesuaikan h-12 jika perlu --}}
+                     <a href="{{ url('/') }}">
+                         <img src="{{ asset('images/logopuskeskupanjangnobg2.png') }}" alt="{{ config('app.name') }}" class="h-12 w-auto">
                      </a>
                  </div>
 
-                 {{-- Tombol Login/Daftar di Kanan Atas --}}
+                 {{-- Tombol Login/Daftar di Kanan Atas (DIPERBESAR) --}}
                  <nav class="flex items-center gap-4">
                      @auth
                          <a
                              href="{{ url('/dashboard') }}"
-                             class="inline-block px-5 py-1.5 border border-white text-white hover:bg-white hover:text-blue-800 rounded-md text-sm leading-normal transition ease-in-out duration-150 shadow-md"
+                             class="inline-block px-6 py-2 border border-blue-500 text-blue-700 hover:bg-blue-100 hover:text-blue-900 rounded-md text-base leading-normal transition ease-in-out duration-150 shadow-md"
                          >
                              <i class="fas fa-tachometer-alt mr-1"></i> Dashboard
                          </a>
                      @else
                          <a
                              href="{{ route('login') }}"
-                             class="inline-block px-5 py-1.5 bg-white text-blue-800 font-semibold hover:bg-blue-100 hover:text-blue-900 rounded-md text-sm leading-normal shadow-md transition ease-in-out duration-150"
+                             class="inline-block px-6 py-2 bg-blue-500 text-white font-semibold hover:bg-blue-600 rounded-full text-base leading-normal transition ease-in-out duration-150 shadow-md"
                          >
                              <i class="fas fa-sign-in-alt mr-1"></i> {{ __('Masuk') }}
                          </a>
@@ -74,7 +78,7 @@
                          @if (Route::has('register'))
                              <a
                                  href="{{ route('register') }}"
-                                 class="inline-block px-5 py-1.5 border border-white text-white hover:bg-white hover:text-blue-800 font-semibold rounded-md text-sm leading-normal shadow-sm transition ease-in-out duration-150">
+                                 class="inline-block px-6 py-2 border-2 border-blue-500 text-blue-700 font-semibold hover:bg-blue-50 rounded-full text-base leading-normal transition ease-in-out duration-150 shadow-sm">
                                  <i class="fas fa-user-plus mr-1"></i> {{ __('Daftar') }}
                              </a>
                          @endif
@@ -85,21 +89,25 @@
 
          {{-- Main Welcome Content --}}
          <div class="main-welcome-content flex flex-col items-center justify-center text-center px-4 sm:px-6 lg:px-8 flex-grow">
-             <h1 class="text-white text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tight mb-4 drop-shadow-lg">
-                 Welcome to <br><span class="text-blue-300">Puskesku Online</span>
+             {{-- Teks H1 dan P tetap sama --}}
+             <h1 class="text-blue-800 text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tight mb-4 drop-shadow-lg">
+                 Welcome to <br><span class="text-blue-600">Puskesku Online</span>
              </h1>
-             <p class="text-white text-xl sm:text-2xl max-w-2xl drop-shadow-md">
+             <p class="text-gray-700 text-xl sm:text-2xl max-w-2xl drop-shadow-md opacity-90">
                  Layanan kesehatan Puskesmas kini dalam genggaman Anda.
                  Buat janji, kelola riwayat, dan akses informasi dengan mudah.
              </p>
+
+             {{-- Tombol Gabung Sekarang (DIKECILKAN SEDIKIT) --}}
              <a href="{{ route('register') }}"
-                class="mt-10 inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold rounded-full shadow-xl transition ease-in-out duration-200">
+                class="mt-10 inline-flex items-center px-6 py-3 bg-blue-600 text-white border-2 border-blue-600 rounded-full font-bold text-lg uppercase tracking-wider hover:bg-blue-700 hover:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-300 shadow-lg transform hover:scale-105">
                  <i class="fas fa-user-plus mr-3"></i> Gabung Sekarang
              </a>
          </div>
-         {{-- "Gabung Sekarang" button --}}
-         <div class="join-now-button-container mt-auto mb-10">
-             
+
+         {{-- Tambahan untuk footer atau elemen lain di bawah (opsional) --}}
+         <div class="w-full text-center mt-auto text-gray-600 text-opacity-70 text-sm">
+             <p>&copy; {{ date('Y') }} Puskesmas Online Kelompok 3</p>
          </div>
 
      </body>
